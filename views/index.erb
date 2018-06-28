@@ -16,6 +16,19 @@
 
   <!-- Add your site or application content here -->
   <p>Hello world! This is HTML5 Boilerplate.</p>
+  <ul id="myul"></ul>
+
+  <script type="text/javascript">
+     var myul = document.getElementById("myul");
+     var es_uri = location.href;
+     var es = new EventSource(es_uri);
+
+     es.onmessage = function (msg) {
+       var myli = document.createElement("li");
+       myli.appendChild(document.createTextNode(msg.data));
+       myul.appendChild(myli);
+     }
+   </script>
 </body>
 
 </html>
