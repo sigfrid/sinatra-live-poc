@@ -19,15 +19,15 @@
   <ul id="myul"></ul>
 
   <script type="text/javascript">
-     var myul = document.getElementById("myul");
-     var es_uri = location.href;
-     var es = new EventSource(es_uri);
+    var myul = document.getElementById("myul");
 
-     es.onmessage = function (msg) {
-       var myli = document.createElement("li");
-       myli.appendChild(document.createTextNode(msg.data));
-       myul.appendChild(myli);
-     }
+    var stream = new EventSource('/the_stream');
+    stream.onmessage = function(msg) {
+      console.log('pippo');
+      var myli = document.createElement("li");
+      myli.appendChild(document.createTextNode(msg.data));
+      myul.appendChild(myli);
+    }
    </script>
 </body>
 
