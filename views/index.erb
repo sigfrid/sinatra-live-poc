@@ -22,6 +22,9 @@
     var myul = document.getElementById("myul");
 
     var stream = new EventSource('/the_stream');
+
+
+
     stream.onmessage = function(msg) {
       console.log('pippo');
       var myli = document.createElement("li");
