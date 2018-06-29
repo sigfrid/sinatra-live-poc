@@ -79,15 +79,14 @@
 });
 
 
-var count = 0
+
 
 function adddata(){
-	myChart.data.datasets[0].data[count] = Math.floor(Math.random() * 60) + 1;
-  myChart.data.datasets[1].data[count] = Math.floor(Math.random() * 60) + 1;
-  myChart.data.datasets[2].data[count] = Math.floor(Math.random() * 60) + 1;
-  myChart.data.labels[count] = moment().format();
+  myChart.data.labels.push(moment().format());
+  myChart.data.datasets.forEach((dataset) => {
+    dataset.data.push(Math.floor(Math.random() * 60) + 1);
+  });
   myChart.update();
-  count += 1;
 }
 
 
