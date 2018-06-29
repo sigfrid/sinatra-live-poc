@@ -33,27 +33,22 @@
   <canvas id="mixed-chart" height="120"></canvas>
 
   <script>
-  //var ctx = document.getElementById("myChart").getContext('2d');
-
   var myChart = new Chart(document.getElementById("mixed-chart"), {
-    type: 'bar',
+    type: 'line',
     data: {
-    //  labels: [new Date('2011-04-11T11:45:00'),new Date('2011-04-11T11:45:03'),new Date('2011-04-11T11:45:06'),new Date('2011-04-11T11:45:09')],
+    //  labels: [new Date('2018-06-29T14:20:33+02:00'), new Date('2018-06-29T17:20:37+02:00')],
       datasets: [{
-          type: "line",
           borderColor: "#8e5ea2",
-      //    data: [408,547,675,734],
+        //  data: [408,547],
           fill: false
         }, {
-          type: "line",
           borderColor: "#3e95cd",
-        //  data: [133,221,783,2478],
+        //  data: [133,221],
           fill: false
         }, {
-          type: "line",
           pointBackgroundColor: "#3e92cd",
           pointBorderColor: "#3e92cd",
-        //  data: [139,241,853,998],
+        //  data: [139,241],
           fill: false,
           showLine: false
         }
@@ -66,9 +61,7 @@
                 time: {
                    unit: 'second',
                    unitStepSize: 2,
-                   displayFormats: {
-                      'second': 'h:mm:ss'
-                   }
+                   displayFormats: { 'second': 'h:mm:ss'}
                 },
                 distribution: 'linear'
             }]
