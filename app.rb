@@ -4,7 +4,7 @@ require 'bundler'
 Bundler.require
 
 
-configure { set :server, :puma }
+#configure { set :server, :puma }
 
 class Live < Sinatra::Base
   connections = []
