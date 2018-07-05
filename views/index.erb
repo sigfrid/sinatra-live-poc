@@ -33,43 +33,60 @@
   <canvas id="mixed-chart" height="120"></canvas>
 
   <script>
-  var myChart = new Chart(document.getElementById("mixed-chart"), {
-    type: 'line',
-    data: {
-    //  labels: [new Date('2018-06-29T14:20:33+02:00'), new Date('2018-06-29T17:20:37+02:00')],
-      datasets: [{
-          borderColor: "#8e5ea2",
-        //  data: [408,547],
-          fill: false
-        }, {
-          borderColor: "#3e95cd",
-        //  data: [133,221],
-          fill: false
-        }, {
-          pointBackgroundColor: "#3e92cd",
-          pointBorderColor: "#3e92cd",
-        //  data: [139,241],
-          fill: false,
-          showLine: false
-        }
-      ]
-    },
-    options: {
-      scales: {
-            xAxes: [{
-                type: 'time',
-                time: {
-                   unit: 'second',
-                   unitStepSize: 2,
-                   displayFormats: { 'second': 'h:mm:ss'}
-                },
-                distribution: 'linear'
-            }]
+    var canvas = document.getElementById("mixed-chart");
+    var options = {
+      type: 'line',
+      data: {
+        datasets: [{
+            borderColor: "#8e5ea2",
+            fill: false
+          }, {
+            borderColor: "#3e95cd",
+            fill: false
+          }, {
+            pointBackgroundColor: "#3e92cd",
+            pointBorderColor: "#3e92cd",
+            fill: false,
+            showLine: false
+          }
+        ]
+      },
+      options: {
+        scales: {
+              xAxes: [{
+                  type: 'time',
+                  time: {
+                     unit: 'second',
+                     stepSize: 2,
+                     displayFormats: { 'second': 'h:mm:ss'}
+                  },
+                  ticks: {
+                    minRotation: 90,
+                    min: moment().format(),
+                    max: moment().add(2, 'hour').format()
+                  },
+                  distribution: 'linear'
+              }],
+              yAxes: [{
+               display: true,
+               ticks: {
+                   //beginAtZero: true,
+                   //steps: 10,
+                   stepValue: 5,
+                   min: 0,
+                   max: 100
+               }
+              }]
+          },
+        legend: {
+          display: false
         },
-      //  ticks: { source: 'data' },
-      legend: { display: false }
-    }
-});
+        responsive: true,
+      }
+  };
+
+  var myChart = new Chart(canvas, options);
+
 
 
 
