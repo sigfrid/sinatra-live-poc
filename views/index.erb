@@ -9,9 +9,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-annotation/0.5.7/chartjs-plugin-annotation.min.js"></script>
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
   <style>
   body { background-color: linen;}
@@ -31,113 +29,97 @@
   <input type="button" value="Add Data" onclick="adddata()">
 
 
-  <canvas id="mixed-chart" height="120"></canvas>
+  <div id="chart_div"></div>
 
   <script>
-    var canvas = document.getElementById("mixed-chart").getContext('2d');
-    var options = {
-      scales: {
-            xAxes: [{
-                type: 'time',
-                time: {
-                   unit: 'second',
-                   stepSize: 240,
-                   displayFormats: { 'second': 'h:mm:ss'}
-                },
-                ticks: {
-                  minRotation: 90
-                },
-                gridLines: {
-                   display:false
-                },
-                distribution: 'linear'
-            }],
-            yAxes: [{
-             display: true,
-             ticks: {
-                 min: 95,
-                 max: 105
-             }
-            }]
+  // Load the Visualization API and the corechart package.
+        google.charts.load('current', {'packages':['corechart']});
+
+        // Set a callback to run when the Google Visualization API is loaded.
+        google.charts.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+     // Create the data table.
+     var dataTable = new google.visualization.DataTable();
+     dataTable.addColumn('datetime', 'Time');
+     dataTable.addColumn('number', 'Mg');
+     dataTable.addColumn('number', 'upper');
+     dataTable.addColumn('number', 'lower');
+
+     dataTable.addRows([
+        [new Date(2018, 6, 6, 14, 2, 0, 0), 21.40, 24, 20],
+        [new Date(2018, 6, 6, 14, 2, 2, 0), 21.39, null, null],
+        [new Date(2018, 6, 6, 14, 2, 4, 0), 21.20, null, null],
+        [new Date(2018, 6, 6, 14, 2, 6, 0), 21.22, null, null],
+        [new Date(2018, 6, 6, 14, 2, 8, 0), 20.99, null, null],
+        [new Date(2018, 6, 6, 14, 2, 10, 0), 21.03, null, null],
+        [new Date(2018, 6, 6, 14, 2, 12, 0), 21.05, null, null],
+        [new Date(2018, 6, 6, 14, 2, 14, 0), 21.07, null, null],
+        [new Date(2018, 6, 6, 14, 2, 16, 0), 21.10, null, null],
+        [new Date(2018, 6, 6, 14, 2, 18, 0), 21.08, null, null],
+        [new Date(2018, 6, 6, 14, 2, 20, 0), 21.05, null, null],
+        [new Date(2018, 6, 6, 14, 2, 22, 0), 21.00, null, null],
+        [new Date(2018, 6, 6, 14, 2, 24, 0), 21.15, null, null],
+        [new Date(2018, 6, 6, 14, 2, 26, 0), 21.17, null, null],
+        [new Date(2018, 6, 6, 14, 2, 28, 0), 21.25, null, null],
+        [new Date(2018, 6, 6, 14, 2, 30, 0), 21.32, null, null],
+        [new Date(2018, 6, 6, 14, 2, 32, 0), 21.35, null, null],
+        [new Date(2018, 6, 6, 14, 2, 34, 0), 21.37, 24, 20]
+     ]);
+
+     var chart = new google.visualization.ComboChart(document.getElementById('chart_div'));
+
+     var options = {
+        title:   'Nozzle 1',
+        height:  600,
+        seriesType: 'scatter',
+        interpolateNulls: true,
+        series: {
+          1: {
+            type: 'line',
+          },
+          2: {
+            type: 'line'
+          }
         },
-      legend: {
-        display: false
-      },
-      responsive: true,
-      annotation: {
-        annotations: [{
-          type: 'line',
-          mode: 'horizontal',
-          scaleID: 'y-axis-0',
-          value: 102,
-          borderColor: 'rgb(75, 192, 192)',
-          borderWidth: 2
-        },{
-          type: 'line',
-          mode: 'horizontal',
-          scaleID: 'y-axis-0',
-          value: 98,
-          borderColor: 'rgb(75, 192, 192)',
-          borderWidth: 2
-        },{
-          type: 'line',
-          mode: 'horizontal',
-          scaleID: 'y-axis-0',
-          value: 99.2,
-          endValue: 100.8,
-          borderColor: 'red',
-          borderWidth: 2
-        }]
-      }
-    }
+        hAxis: {
+          slantedText: true,
+          slantedTextAngle: 90,
+          format: 'HH:mm:ss',
+          //gridlines: {count: 15}
+          viewWindowMode:'explicit',
+          viewWindow: {
+            max: new Date(2018, 6, 6, 14, 4, 0, 0),
+            min: new Date(2018, 6, 6, 14, 2, 0, 0)
+          }
+          },
+          vAxis: {
+            viewWindowMode:'explicit',
+            viewWindow: {
+              max: 26,
+              min: 18
+            }
+          },
+            legend: 'none',
+            trendlines: { 0: {} }
+        };
+      //  width    : 1400,
+      //  pointSize: 5,
+        //vAxis: { title: 'Mg', maxValue: 21.50, minValue: 20.50 },
+      //  hAxis: { title: 'Time of day (Hours:Minutes)', format: 'HH:mm', gridlines: {count:9} }
+     //};
 
+     var formatNumber = new google.visualization.NumberFormat(
+        {prefix: '', negativeColor: 'red', negativeParens: true});
 
-    var limit = 900; //9140;
+     var formatDate = new google.visualization.DateFormat(
+        { prefix: 'Time: ', pattern: "dd MMM HH:mm", });
 
+     formatDate.format(dataTable, 0);
+     formatNumber.format(dataTable, 1);
 
-    var mydata = [];
-
-
-
-    var i;
-
-    for (i = 0; i < limit; i++) {
-      mydata.push({
-          t: moment('2016-03-12 13:00:00').add(2*i, 'seconds').format(),
-          y: (Math.random() * (100.3 - 99.8) + 99.8)//.toFixed(2)
-      });
-
-
-
-
-    }
-
-
-  var myChart = new Chart(canvas, { type: 'line', options });
-
-  var dataSet1 = {
-    borderColor: 'blue',
-    fill: false,
-    showLine: false,
-    data: mydata
-  }
-
-
-  myChart.data.datasets.push(dataSet1);
-  myChart.update();
-
-
-
-
-function adddata(){
-  myChart.data.labels.push(moment().format());
-  myChart.data.datasets.forEach((dataset) => {
-    dataset.data.push(Math.floor(Math.random() * 60) + 1);
-  });
-  myChart.update();
-}
-
-
+     chart.draw(dataTable, options);
+  }  // drawChart
   </script>
 
 
