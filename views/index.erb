@@ -11,6 +11,7 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-annotation/0.5.7/chartjs-plugin-annotation.min.js"></script>
 
   <style>
   body { background-color: linen;}
@@ -33,60 +34,97 @@
   <canvas id="mixed-chart" height="120"></canvas>
 
   <script>
-    var canvas = document.getElementById("mixed-chart");
+    var canvas = document.getElementById("mixed-chart").getContext('2d');
     var options = {
-      type: 'line',
-      data: {
-        datasets: [{
-            borderColor: "#8e5ea2",
-            fill: false
-          }, {
-            borderColor: "#3e95cd",
-            fill: false
-          }, {
-            pointBackgroundColor: "#3e92cd",
-            pointBorderColor: "#3e92cd",
-            fill: false,
-            showLine: false
-          }
-        ]
-      },
-      options: {
-        scales: {
-              xAxes: [{
-                  type: 'time',
-                  time: {
-                     unit: 'second',
-                     stepSize: 2,
-                     displayFormats: { 'second': 'h:mm:ss'}
-                  },
-                  ticks: {
-                    minRotation: 90,
-                    min: moment().format(),
-                    max: moment().add(2, 'hour').format()
-                  },
-                  distribution: 'linear'
-              }],
-              yAxes: [{
-               display: true,
-               ticks: {
-                   //beginAtZero: true,
-                   //steps: 10,
-                   stepValue: 5,
-                   min: 0,
-                   max: 100
-               }
-              }]
-          },
-        legend: {
-          display: false
+      scales: {
+            xAxes: [{
+                type: 'time',
+                time: {
+                   unit: 'second',
+                   stepSize: 240,
+                   displayFormats: { 'second': 'h:mm:ss'}
+                },
+                ticks: {
+                  minRotation: 90
+                },
+                gridLines: {
+                   display:false
+                },
+                distribution: 'linear'
+            }],
+            yAxes: [{
+             display: true,
+             ticks: {
+                 min: 95,
+                 max: 105
+             }
+            }]
         },
-        responsive: true,
+      legend: {
+        display: false
+      },
+      responsive: true,
+      annotation: {
+        annotations: [{
+          type: 'line',
+          mode: 'horizontal',
+          scaleID: 'y-axis-0',
+          value: 102,
+          borderColor: 'rgb(75, 192, 192)',
+          borderWidth: 2
+        },{
+          type: 'line',
+          mode: 'horizontal',
+          scaleID: 'y-axis-0',
+          value: 98,
+          borderColor: 'rgb(75, 192, 192)',
+          borderWidth: 2
+        },{
+          type: 'line',
+          mode: 'horizontal',
+          scaleID: 'y-axis-0',
+          value: 99.2,
+          endValue: 100.8,
+          borderColor: 'red',
+          borderWidth: 2
+        }]
       }
-  };
+    }
 
-  var myChart = new Chart(canvas, options);
 
+    var limit = 900; //9140;
+
+
+    var mydata = [];
+
+
+
+    var i;
+
+    for (i = 0; i < limit; i++) {
+      mydata.push({
+          t: moment('2016-03-12 13:00:00').add(2*i, 'seconds').format(),
+          y: (Math.random() * (100.3 - 99.8) + 99.8)//.toFixed(2)
+      });
+
+
+
+
+    }
+
+
+  var myChart = new Chart(canvas, { type: 'line', options });
+
+  var dataSet1 = {
+    borderColor: 'blue',
+    fill: false,
+    showLine: false,
+    data: mydata
+  }
+
+
+  myChart.data.datasets.push(dataSet1);
+  myChart.update();
 
 
 
