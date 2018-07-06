@@ -42,36 +42,25 @@
 
         function drawChart() {
      // Create the data table.
-     var dataTable = new google.visualization.DataTable();
-     dataTable.addColumn('datetime', 'Time');
-     dataTable.addColumn('number', 'Mg');
-     dataTable.addColumn('number', 'upper');
-     dataTable.addColumn('number', 'lower');
+     data = new google.visualization.DataTable();
+     data.addColumn('datetime', 'Time');
+     data.addColumn('number', 'Mg');
+     data.addColumn('number', 'upper');
+     data.addColumn('number', 'lower');
 
-     dataTable.addRows([
-        [moment('2018-07-06 14:02:00').toDate(), 21.40, 24, 20],
-        [moment('2018-07-06 14:02:02').toDate(), 21.39, null, null],
-        [moment('2018-07-06 14:02:04').toDate(), 21.20, null, null],
-        [moment('2018-07-06 14:02:06').toDate(), 21.22, null, null],
-        [moment('2018-07-06 14:02:08').toDate(), 20.99, null, null],
-        [moment('2018-07-06 14:02:10').toDate(), 21.03, null, null],
-        [moment('2018-07-06 14:02:12').toDate(), 21.05, null, null],
-        [moment('2018-07-06 14:02:14').toDate(), 21.07, null, null],
-        [moment('2018-07-06 14:02:16').toDate(), 21.10, null, null],
-        [moment('2018-07-06 14:02:18').toDate(), 21.08, null, null],
-        [moment('2018-07-06 14:02:20').toDate(), 21.05, null, null],
-        [moment('2018-07-06 14:02:22').toDate(), 21.00, null, null],
-        [moment('2018-07-06 14:02:24').toDate(), 21.15, null, null],
-        [moment('2018-07-06 14:02:26').toDate(), 21.17, null, null],
-        [moment('2018-07-06 14:02:28').toDate(), 21.25, null, null],
-        [moment('2018-07-06 14:02:30').toDate(), 21.32, null, null],
-        [moment('2018-07-06 14:02:32').toDate(), 21.35, null, null],
-        [moment('2018-07-06 14:02:34').toDate(), 21.37, 24, 20]
-     ]);
+      upper = 102;
+      lower = 98;
+     var limit = 20; //9140;
+     for (i = 0; i < limit; i++) {
+         data.addRow([moment('2018-07-06 14:02:00').add(2*i, 'seconds').toDate(),
+                      (Math.random() * (100.3 - 99.8) + 99.8),
+                      lower,
+                      upper]);
+      }
 
-     var chart = new google.visualization.ComboChart(document.getElementById('chart_div'));
+      chart = new google.visualization.ComboChart(document.getElementById('chart_div'));
 
-     var options = {
+      options = {
         title:   'Nozzle 1',
         height:  600,
         seriesType: 'scatter',
@@ -99,8 +88,8 @@
           vAxis: {
             viewWindowMode:'explicit',
             viewWindow: {
-              min: 18,
-              max: 26
+              min: lower - 2,
+              max: upper + 2
             }
           },
             legend: 'none',
@@ -118,11 +107,24 @@
      var formatDate = new google.visualization.DateFormat(
         { prefix: 'Time: ', pattern: "dd MMM HH:mm", });
 
-     formatDate.format(dataTable, 0);
-     formatNumber.format(dataTable, 1);
+     formatDate.format(data, 0);
+     formatNumber.format(data, 1);
 
-     chart.draw(dataTable, options);
+     chart.draw(data, options);
   }  // drawChart
+
+
+  function adddata(){
+    data.addRow([moment('2018-07-06 14:02:00').add(1, 'minutes').toDate(),
+                 (Math.random() * (100.3 - 99.8) + 99.8),
+                 lower,
+                 upper]);
+    chart.draw(data, options);
+  }
+
+
+
+
   </script>
 
 
