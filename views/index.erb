@@ -10,6 +10,8 @@
 
 
   <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+
 
   <style>
   body { background-color: linen;}
@@ -47,24 +49,24 @@
      dataTable.addColumn('number', 'lower');
 
      dataTable.addRows([
-        [new Date(2018, 6, 6, 14, 2, 0, 0), 21.40, 24, 20],
-        [new Date(2018, 6, 6, 14, 2, 2, 0), 21.39, null, null],
-        [new Date(2018, 6, 6, 14, 2, 4, 0), 21.20, null, null],
-        [new Date(2018, 6, 6, 14, 2, 6, 0), 21.22, null, null],
-        [new Date(2018, 6, 6, 14, 2, 8, 0), 20.99, null, null],
-        [new Date(2018, 6, 6, 14, 2, 10, 0), 21.03, null, null],
-        [new Date(2018, 6, 6, 14, 2, 12, 0), 21.05, null, null],
-        [new Date(2018, 6, 6, 14, 2, 14, 0), 21.07, null, null],
-        [new Date(2018, 6, 6, 14, 2, 16, 0), 21.10, null, null],
-        [new Date(2018, 6, 6, 14, 2, 18, 0), 21.08, null, null],
-        [new Date(2018, 6, 6, 14, 2, 20, 0), 21.05, null, null],
-        [new Date(2018, 6, 6, 14, 2, 22, 0), 21.00, null, null],
-        [new Date(2018, 6, 6, 14, 2, 24, 0), 21.15, null, null],
-        [new Date(2018, 6, 6, 14, 2, 26, 0), 21.17, null, null],
-        [new Date(2018, 6, 6, 14, 2, 28, 0), 21.25, null, null],
-        [new Date(2018, 6, 6, 14, 2, 30, 0), 21.32, null, null],
-        [new Date(2018, 6, 6, 14, 2, 32, 0), 21.35, null, null],
-        [new Date(2018, 6, 6, 14, 2, 34, 0), 21.37, 24, 20]
+        [moment('2018-07-06 14:02:00').toDate(), 21.40, 24, 20],
+        [moment('2018-07-06 14:02:02').toDate(), 21.39, null, null],
+        [moment('2018-07-06 14:02:04').toDate(), 21.20, null, null],
+        [moment('2018-07-06 14:02:06').toDate(), 21.22, null, null],
+        [moment('2018-07-06 14:02:08').toDate(), 20.99, null, null],
+        [moment('2018-07-06 14:02:10').toDate(), 21.03, null, null],
+        [moment('2018-07-06 14:02:12').toDate(), 21.05, null, null],
+        [moment('2018-07-06 14:02:14').toDate(), 21.07, null, null],
+        [moment('2018-07-06 14:02:16').toDate(), 21.10, null, null],
+        [moment('2018-07-06 14:02:18').toDate(), 21.08, null, null],
+        [moment('2018-07-06 14:02:20').toDate(), 21.05, null, null],
+        [moment('2018-07-06 14:02:22').toDate(), 21.00, null, null],
+        [moment('2018-07-06 14:02:24').toDate(), 21.15, null, null],
+        [moment('2018-07-06 14:02:26').toDate(), 21.17, null, null],
+        [moment('2018-07-06 14:02:28').toDate(), 21.25, null, null],
+        [moment('2018-07-06 14:02:30').toDate(), 21.32, null, null],
+        [moment('2018-07-06 14:02:32').toDate(), 21.35, null, null],
+        [moment('2018-07-06 14:02:34').toDate(), 21.37, 24, 20]
      ]);
 
      var chart = new google.visualization.ComboChart(document.getElementById('chart_div'));
@@ -89,15 +91,16 @@
           //gridlines: {count: 15}
           viewWindowMode:'explicit',
           viewWindow: {
-            max: new Date(2018, 6, 6, 14, 4, 0, 0),
-            min: new Date(2018, 6, 6, 14, 2, 0, 0)
+            min: moment('2018-07-06 14:02:00').toDate(),
+            max: moment('2018-07-06 14:02:00').add(2, 'minutes').toDate()
+
           }
           },
           vAxis: {
             viewWindowMode:'explicit',
             viewWindow: {
-              max: 26,
-              min: 18
+              min: 18,
+              max: 26
             }
           },
             legend: 'none',
