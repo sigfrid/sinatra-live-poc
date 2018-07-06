@@ -50,9 +50,10 @@
 
       upper = 102;
       lower = 98;
+      startTime = moment().format();
      var limit = 20; //9140;
      for (i = 0; i < limit; i++) {
-         data.addRow([moment('2018-07-06 14:02:00').add(2*i, 'seconds').toDate(),
+         data.addRow([moment(startTime).add(2*i, 'seconds').toDate(),
                       (Math.random() * (100.3 - 99.8) + 99.8),
                       lower,
                       upper]);
@@ -80,8 +81,8 @@
           //gridlines: {count: 15}
           viewWindowMode:'explicit',
           viewWindow: {
-            min: moment('2018-07-06 14:02:00').toDate(),
-            max: moment('2018-07-06 14:02:00').add(2, 'minutes').toDate()
+            min: moment(startTime).toDate(),
+            max: moment(startTime).add(2, 'minutes').toDate()
 
           }
           },
@@ -115,7 +116,7 @@
 
 
   function adddata(){
-    data.addRow([moment('2018-07-06 14:02:00').add(1, 'minutes').toDate(),
+    data.addRow([moment().add(1, 'minutes').toDate(),
                  (Math.random() * (100.3 - 99.8) + 99.8),
                  lower,
                  upper]);
