@@ -51,13 +51,13 @@
       upper = 102;
       lower = 98;
       startTime = moment().format();
-
-
-      data.addRows([
-        [moment(startTime).toDate(),                  (Math.random() * (100.3 - 99.8) + 99.8), lower, upper],
-        [moment(startTime).add(30, 'minutes').toDate(),  null, lower, upper]
-      ]);
-
+     var limit = 60; //9140;
+     for (i = 0; i < limit; i++) {
+         data.addRow([moment(startTime).add(i, 'minutes').toDate(),
+                      (Math.random() * (100.3 - 99.8) + 99.8),
+                      lower,
+                      upper]);
+      }
 
       chart = new google.visualization.ComboChart(document.getElementById('chart_div'));
 
@@ -69,11 +69,11 @@
         series: {
           1: {
             type: 'line',
-            color: 'purple'
+            color: 'red',
           },
           2: {
             type: 'line',
-            color: 'purple'
+            color: 'red',
           }
         },
         hAxis: {
@@ -84,7 +84,7 @@
           viewWindowMode:'explicit',
           viewWindow: {
             min: moment(startTime).toDate(),
-            max: moment(startTime).add(30, 'minutes').toDate()
+            max: moment(startTime).add(1, 'hours').toDate()
 
           }
           },
@@ -96,9 +96,7 @@
             }
           },
             legend: 'none',
-            trendlines: { 0: {color: 'purple',
-        lineWidth: 4,
-        opacity: 0.2} }
+            trendlines: { 0: {} }
         };
       //  width    : 1400,
       //  pointSize: 5,
@@ -120,8 +118,8 @@
 
 
   function adddata(){
-    data.addRow([moment().add(1, 'minutes').toDate(),
-                 (Math.random() * (101.0 - 99.0) + 99.0),
+    data.addRow([moment('2018-07-06 14:02:00').add(1, 'minutes').toDate(),
+                 (Math.random() * (100.3 - 99.8) + 99.8),
                  lower,
                  upper]);
     chart.draw(data, options);

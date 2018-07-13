@@ -12,4 +12,8 @@ class Live < Sinatra::Base
   get '/' do
     erb :index
   end
+
+  get '/distribution' do
+    erb :distribution
+  end
 end

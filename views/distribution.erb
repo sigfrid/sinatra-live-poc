@@ -1,0 +1,111 @@
+<!doctype html>
+<html class="no-js" lang="">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>Sinatra Live !!!!</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jstat/1.7.1/jstat.min.js"></script>
+
+
+  <style>
+  body { background-color: linen;}
+
+   canvas { background:#fff; border:1px solid #ccc; } */
+  </style>
+
+</head>
+
+<body>
+  <!--[if lte IE 9]>
+    <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
+  <![endif]-->
+
+  <!-- Add your site or application content here -->
+  <p>Hello world! This is HTML5 Boilerplate.</p>
+  <input type="button" value="Add Data" onclick="adddata()">
+
+
+  <div id="chart_div"></div>
+
+  <script>
+  var data;
+  var options;
+  let chart;
+  var dataPoints = [];
+
+  for (var i = 0; i <= 50; i += 1) {
+    dataPoints.push(Math.random() * (100.3 - 99.7) + 99.7);
+  }
+
+
+  var stndDev = jStat.stdev(dataPoints);
+  var mean = jStat.mean(dataPoints);
+  let xMin = jStat.min(dataPoints) -0.5;
+  let xMax = jStat.max(dataPoints) +0.5;
+  let xLeft = jStat.mean(dataPoints) - 0.2;
+  let xRight = jStat.mean(dataPoints) + 0.2;
+
+
+  google.charts.load("current", { packages: ["corechart"] });
+  google.charts.setOnLoadCallback(prepareChart);
+
+  function prepareChart() {
+    data = new google.visualization.DataTable();
+    setChartOptions();
+    addColumns();
+    addData();
+    drawChart();
+  }
+  function setChartOptions() {
+    options = { 'width': 1200,
+                'height': 600,
+                legend: "none" };
+
+    return options;
+  }
+  function addColumns() {
+    data.addColumn("number", "X Value");
+    data.addColumn("number", "Y Value");
+    data.addColumn({ type: "boolean", role: "scope" });
+    data.addColumn({ type: "string", role: "style" });
+  }
+
+  function addData() {
+    data.addRows(createArray(xMin, xMax, xLeft, xRight, mean, stndDev));
+  }
+  function createArray(xMin, xMax, xLeft, xRight, mean, stndDev) {
+    let chartData = new Array([]);
+    let index = 0;
+    for (var i = xMin; i <= xMax; i += 0.01) {
+      chartData[index] = new Array(4);
+      chartData[index][0] = i;
+      chartData[index][1] = jStat.normal.pdf(i, mean, stndDev);
+
+      if (i < xLeft || i > xRight) {
+        chartData[index][2] = false;
+      }
+      chartData[index][3] = "opacity: 1; + color: #8064A2; + stroke-color: black; ";
+
+      index++;
+    }
+    return chartData;
+  }
+
+  function drawChart() {
+    chart = new google.visualization.AreaChart(
+      document.getElementById("chart_div")
+    );
+    chart.draw(data, options);
+  }
+  </script>
+
+
+</body>
+
+</html>
